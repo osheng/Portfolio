@@ -3,8 +3,6 @@ from asset import Asset
 from typing import Dict
 from pandas import DataFrame
 
-POSSIBLE_ASSETS = ["S&P500","S&P/TSX Comp"]
-
 class Portfolio:
     """A portfolio object"""
 
@@ -22,13 +20,18 @@ class Portfolio:
         self.asset_allocation = asset_allocation
 
     def value(self):
-        """Return the value of the portfolio over time"""
+        """
+        Return DataFrame giving the value and %-change of the portfolio over time
+        """
         df = DataFrame()
         for a in assets:
             if df.empty:
                 df = assets[a]
+                df["Weighted Change"] = df["Change"] * asset_allocation[a]
             else:
-                df.merge(assets[a], on="Date")
-        df["Portfolio Value"] = start_value # times the change in assets for the given weight
-        df["Portfolio Change"] = df["Portfolio Value"]/start_value
+                df.merge(assets[a], on = "Date")
+        df["Portfolio Change"] = \
+            df.filter(regex=".*" + "Weighted Change"+".*"), on = "Date")\
+                .sum(axis=1)
+        df["Portfolio Value"] = start_value * df["Portfolio Change"]
         return df["Date", "Portfolio Value", "Portfolio Change"]
