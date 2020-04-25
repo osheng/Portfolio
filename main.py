@@ -1,5 +1,5 @@
-import portfolio
-import pandas
+from portfolio import Portfolio
 
-def model(p:Portfolio):
-    
+
+def model(p: Portfolio):
+    pass
