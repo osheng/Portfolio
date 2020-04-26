@@ -4,3 +4,5 @@
 !README.md
 !.gitignore
 !*.py
+!raw_data/
+!raw_data/*.csv
