@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import seaborn as sns
 from constants import *
 from matplotlib import pyplot as plt
@@ -22,13 +23,17 @@ y = pd.read_csv(RAW + argv[2])
 data = x.merge(y, on=DATE).rename(columns={ACLO+"_x": x_name, ACLO+"_y": y_name})
 data = data[[DATE, x_name, y_name]].dropna(axis=0)
 
-
+n = 3
 g = sns.FacetGrid(data)
-g = g.map(sns.scatterplot, x_name, y_name, edgecolor="white")
+g = g.map(sns.scatterplot, x_name, y_name)
 x = data[x_name]
 y = data[y_name]
-v = LSA(x, y, n=1)
-X = np.arange(min(x), max(x))
-Y = v[0]*X+v[1]
+v = LSA(x, y, n=n)
+min_x = np.floor(min(x))
+max_x = np.ceil(max(x))
+X = np.arange(min_x, max_x)
+Y = np.zeros(int(max_x-min_x))
+for i in np.arange(0,n+1):
+    Y = Y + v[n-i]*(X**i)
 plt.plot(X,Y,color="red")
 plt.show(g)
