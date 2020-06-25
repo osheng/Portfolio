@@ -18,3 +18,6 @@ def LSA(x: Series, y: Series, n=1) -> list:
         A = np.concatenate((temp,A), axis=1)
     Y = np.ndarray((x.size,1), buffer=y.to_numpy(), dtype=np.float)
     return list(inv(A.T.dot(A)).dot(A.T.dot(Y)).flatten())
+
+# def sq_error():
+# def r_squared():
