@@ -23,7 +23,7 @@ y = pd.read_csv(RAW + argv[2])
 data = x.merge(y, on=DATE).rename(columns={ACLO+"_x": x_name, ACLO+"_y": y_name})
 data = data[[DATE, x_name, y_name]].dropna(axis=0)
 
-n = 3
+n = 1
 g = sns.FacetGrid(data)
 g = g.map(sns.scatterplot, x_name, y_name)
 x = data[x_name]
@@ -37,3 +37,4 @@ for i in np.arange(0,n+1):
     Y = Y + v[n-i]*(X**i)
 plt.plot(X,Y,color="red")
 plt.show(g)
+# TDDO: I'd like to figure out why this doesn't look more linear than it does.
