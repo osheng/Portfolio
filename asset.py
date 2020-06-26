@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from pandas import DataFrame
 from pandas import Series
-from constants import
+from constants import *
 import datetime
 """
 Note: I'm using the word value rather than price because I could imagine
@@ -20,22 +20,20 @@ class Asset:
         assert history[DATE].is_unique, "duplicate dates in history!"
         assert ACLO in history.columns, "history has no Value column"
 
-        # Convert price data type
-        history[ACLO] = history[ACLO].map(lambda x: True if type(x) == float else False, na_action='ignore')
-        # Confirm no null values
-        assert 0 == history[ACLO].isnull().sum()
-
         # Convert date data type
         history[DATE] = history[DATE].apply(pd.to_datetime)
         self.history = history[[DATE, ACLO]]
         self.history.set_index(DATE)
+        print(len(history[ACLO]))
+        self.history.dropna(inplace=True)
+        print(len(history[ACLO]))
         self.history.sort_values(by="index", axis=0, inplace=True, kind='mergesort')
 
         # Create daily rate of return
         self.history[DAILY] = 1
         vcn = self.history.columns.get_loc(ACLO) #value's column number
         dcn = self.history.columns.get_loc(DAILY) #DAILY's column number
-        for i np.arange(1,len(self.history.index)-1):
+        for i in np.arange(1,len(self.history.index)-1):
             self.history[DAILY].iat[i, dcn] = self.history.iloc[i, ACLO] / self.history.iloc[i-1, ACLO]
 
 
