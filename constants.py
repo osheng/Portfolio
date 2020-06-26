@@ -5,7 +5,7 @@ XIC = "XIC.csv"
 TSX = "SPTSXComp.csv"
 ACLO = "Adj Close"
 
-DAILY = "Daily Rate of Return: the rate of return on an investment from one day to the next"
+DAILY = "Daily RoR"
 # To bring constans into the console, from the console write the following
 # exec(open("constants.py").read())
 

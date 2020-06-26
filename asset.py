@@ -22,35 +22,30 @@ class Asset:
 
         # Convert date data type
         history[DATE] = history[DATE].apply(pd.to_datetime)
-        self.history = history[[DATE, ACLO]]
-        self.history.set_index(DATE)
-        print(len(history[ACLO]))
-        self.history.dropna(inplace=True)
-        print(len(history[ACLO]))
-        self.history.sort_values(by="index", axis=0, inplace=True, kind='mergesort')
+        # Later on, perhaps creating Assets with null values would give warnings
+        assert history[DATE].isna().any() == False
+
+        self.history = history[[DATE, ACLO]].set_index(DATE).dropna().sort_index()
 
         # Create daily rate of return
-        self.history[DAILY] = 1
+        self.history[DAILY] = 0.0
         vcn = self.history.columns.get_loc(ACLO) #value's column number
         dcn = self.history.columns.get_loc(DAILY) #DAILY's column number
-        for i in np.arange(1,len(self.history.index)-1):
-            self.history[DAILY].iat[i, dcn] = self.history.iloc[i, ACLO] / self.history.iloc[i-1, ACLO]
+
+        for i in np.arange(1,len(self.history.index)):
+            self.history.iat[i, dcn] = (self.history.iloc[i, vcn] / self.history.iloc[i-1, vcn]) - 1
 
 
         #Set other attributes
         self.name = name
         self.denomination = None
-        self.start_date = min(history[DATE])
-        self.start_value = history[history[DATE] == self.start_date][ACLO][0]
-        self.end_date = max(history[DATE])
-        self.end_value = history[history[DATE] == self.end_date][ACLO][0]
-        # I'm including both of these for the moment to remind myself of the syntax.
-        assert self.end_value == self.history.loc[self.end_date, ACLO]
-
-        self.mean_daily = self.history[DAILY].mean
-        self.median_daily = self.history[DAILY].median
-
-        self.history["Change"] = history[ACLO] / self.start_value
+        self.start_date = min(self.history.index)
+        self.start_value = self.history.loc[self.start_date,ACLO]
+        self.end_date = max(self.history.index)
+        self.end_value = self.history.loc[self.end_date,ACLO]
+        self.mean_daily = self.history[DAILY].mean()
+        self.median_daily = self.history[DAILY].median()
+        # self.history["Change"] = history[ACLO] / self.start_value # This line is problematic and I'd like to understand why
 
     def get_value(self, d: datetime) -> float:
         # Note: here I want to test how to input a date
