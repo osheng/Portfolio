@@ -10,8 +10,9 @@ basic manipulations.
 * find the price on specific dates
 * get day to day rates of Return
 * find max and min daily rates of return
-* drop the max and min daily rates
-* compute mean and median daily rates
+* find the n days with the highest (or lowest RoR)
+* drop the max and min daily rates (not necessary)
+* compute mean and median daily rates (including or exlcuding extremes)
 * compute rate of return over a set period (like earliest date to latest)
 * etc
 
