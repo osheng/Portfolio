@@ -47,6 +47,7 @@ def plot_density(s: Series, n=100):
     Plot the density of values in a series of numeric values
     """
     data = s.value_counts(bins=n, sort=False).sort_index()
-    mean_index = (data.index.right - data.index.left) / 2
-    sns.barplot(x=mean_index, y=data, color="blue")
+    mean_index = (((data.index.right - data.index.left) / 2)+ data.index.left)*10**5
+    # TODO: I would rather the x and y labels looked different.
+    sns.barplot(x=mean_index, y=data, color="blue", ci=None)
     plt.show()
