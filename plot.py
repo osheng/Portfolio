@@ -36,18 +36,28 @@ if testing:
     max_x = np.ceil(max(x))
     X = np.arange(min_x, max_x)
     Y = np.zeros(int(max_x-min_x))
-    for i in np.arange(0,n+1):
+    for i in np.arange(0, n+1):
         Y = Y + v[n-i]*(X**i)
-    plt.plot(X,Y,color="red")
+    plt.plot(X, Y, color="red")
     plt.show(g)
     # TDDO: I'd like to figure out why this doesn't look more linear than it does.
 
-def plot_density(s: Series, n=100):
+
+def plot_density(s: Series, n=100, scale=10**5, num_quantiles=4, normalize=False):
     """
     Plot the density of values in a series of numeric values
     """
-    data = s.value_counts(bins=n, sort=False).sort_index()
-    mean_index = (((data.index.right - data.index.left) / 2)+ data.index.left)*10**5
-    # TODO: I would rather the x and y labels looked different.
-    sns.barplot(x=mean_index, y=data, color="blue", ci=None)
+    data = s.value_counts(bins=n, sort=False, normalize=normalize).sort_index()
+    mean_index = (((data.index.right - data.index.left) / 2) + data.index.left)*scale
+    quantiles = [s.quantile(p/num_quantiles) for p in np.arange(1, num_quantiles)]
+    colors = ["red" if any([q in x for q in quantiles]) else "blue" for x in data.index]
+    barplot = sns.barplot(x=mean_index, y=data, palette=colors, ci=None)
+    for xlabel in barplot.get_xticklabels():
+        xlabel.set_rotation(90)
+    xticklabels = ["" for x in data.index]
+    for i in np.arange(0, len(data.index)):
+        for q in quantiles:
+            if q in data.index[i]:
+                xticklabels[i] = int(q*scale)
+    barplot.set_xticklabels(xticklabels)
     plt.show()
