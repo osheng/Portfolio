@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 from sys import argv
 from LSA import LSA
 from sklearn import linear_model
+from matplotlib.text import Text
 
 # assert len(argv) == 3 "Usage: python3 plot.py CSV_NAME.csv CSV_NAME.csv"
 # for i in range(1,3):
@@ -52,12 +53,16 @@ def plot_density(s: Series, n=100, scale=10**5, num_quantiles=4, normalize=False
     quantiles = [s.quantile(p/num_quantiles) for p in np.arange(1, num_quantiles)]
     colors = ["red" if any([q in x for q in quantiles]) else "blue" for x in data.index]
     barplot = sns.barplot(x=mean_index, y=data, palette=colors, ci=None)
-    for xlabel in barplot.get_xticklabels():
-        xlabel.set_rotation(90)
-    xticklabels = ["" for x in data.index]
-    for i in np.arange(0, len(data.index)):
-        for q in quantiles:
-            if q in data.index[i]:
-                xticklabels[i] = int(q*scale)
-    barplot.set_xticklabels(xticklabels)
+    new_xlabels = ["" for x in data.index]
+    xticklabels = barplot.get_xticklabels()
+    i = 0
+    q_j = 0
+    while i < len(data.index):
+        xticklabels[i].set_rotation("vertical")
+        if q_j < len(quantiles) and quantiles[q_j] in data.index[i]:
+            new_xlabels[i] = int(quantiles[q_j]*scale)
+            q_j += 1
+        else:
+            i += 1
+    barplot.set_xticklabels(new_xlabels)  # This seems unvoidable.
     plt.show()
