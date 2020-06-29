@@ -59,3 +59,6 @@ class Asset:
         if kind == "best":
             return data[DAILY].tail(n)
         return data[DAILY].head(n)
+
+    def get_ror(self, from=None, to=None)->float:
+        
