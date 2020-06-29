@@ -66,3 +66,7 @@ def plot_density(s: Series, n=100, scale=10**5, num_quantiles=4, normalize=False
             i += 1
     barplot.set_xticklabels(new_xlabels)  # This seems unvoidable.
     plt.show()
+
+# aternatively I could just use
+# sns.distplot(a.history[DAILY], kde=False)
+# plt.show()
