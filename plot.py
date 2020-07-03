@@ -44,13 +44,14 @@ if testing:
     # TDDO: I'd like to figure out why this doesn't look more linear than it does.
 
 
-def plot_density(s: Series, n=100, scale=10**5, num_quantiles=4, normalize=False):
+def plot_density(s: Series, n=100, round_to=2, num_quantiles=4, normalize=False):
     """
     Plot the density of values in a series of numeric values
     """
     data = s.value_counts(bins=n, sort=False, normalize=normalize).sort_index()
-    mean_index = (((data.index.right - data.index.left) / 2) + data.index.left)*scale
-    quantiles = [s.quantile(p/num_quantiles) for p in np.arange(1, num_quantiles)]
+    mean_index = (((data.index.right - data.index.left) / 2) + data.index.left)
+    quantiles = [s.min()] + [s.quantile(p/num_quantiles)
+                             for p in np.arange(1, num_quantiles)] + [s.max()]
     colors = ["red" if any([q in x for q in quantiles]) else "blue" for x in data.index]
     barplot = sns.barplot(x=mean_index, y=data, palette=colors, ci=None)
     new_xlabels = ["" for x in data.index]
@@ -58,15 +59,15 @@ def plot_density(s: Series, n=100, scale=10**5, num_quantiles=4, normalize=False
     i = 0
     q_j = 0
     while i < len(data.index):
-        xticklabels[i].set_rotation("vertical")
+        # xticklabels[i].set_rotation("vertical")
         if q_j < len(quantiles) and quantiles[q_j] in data.index[i]:
-            new_xlabels[i] = int(quantiles[q_j]*scale)
+            new_xlabels[i] = round(quantiles[q_j]*100, round_to)
             q_j += 1
         else:
             i += 1
     barplot.set_xticklabels(new_xlabels)  # This seems unvoidable.
     plt.show()
 
-# aternatively I could just use
-# sns.distplot(a.history[DAILY], kde=False)
+# aternatively I could just use something like this
+# sns.distplot(a.history[DAILY], bins=1000, kde=False)
 # plt.show()

@@ -8,11 +8,11 @@ from constants import *
 import numpy as np
 from asset import *
 from numpy.linalg import inv
-import pdb # debugger
+import pdb  # debugger
 WELCOME = "The console is now set up and ready for you to explore data!"
 TSX_data = pd.read_csv(RAW + TSX)
 XIC_data = pd.read_csv(RAW + XIC)
-print(WELCOME)
+
 
 data = TSX_data.merge(XIC_data, on=DATE)
 
@@ -23,13 +23,15 @@ y = data[ACLO + "_y"]
 
 def run(file_name: str) -> None:
     exec(open(file_name).read())
+
+
 exec(open("asset.py").read())
 exec(open("plot.py").read())
 
 a = Asset(name=TSX, history_fn=RAW+TSX)
-hyp_data2 = hyp1(a.history, step = 1, num_segments="Max",duration=10)
+hyp_data2 = get_returns(a.history, step=1, num_segments="Max", duration=0.5)
 sns.set_style("darkgrid")
-g = sns.lineplot(data=hyp_data2,x=DATE, y=ROR, palette=["blue"])
+g = sns.lineplot(data=hyp_data2, x=DATE, y=ROR, palette=["blue"])
 
 title = "Rate of return after 5 years for investments in the TSX from 1979 to 2015\n"
 note = "Note: assumes 5 years = 252 times 5 = 1512 trading days\n"
@@ -40,3 +42,4 @@ plt.title(title + note + ignores)
 # plt.savefig("5yRoRoverTtime1.png", dpi=600)
 
 #
+print(WELCOME)

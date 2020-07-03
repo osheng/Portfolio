@@ -4,6 +4,7 @@ from pandas import DataFrame
 from pandas import Series
 from constants import *
 import datetime
+from typing import Union, Iterable
 """
 Note: I'm using the word value rather than price because I could imagine
 importing an index as an asset as well.
@@ -62,14 +63,37 @@ class Asset:
         return data[DAILY].head(n)
 
     def get_ror(self, start_date=None, end_date=None) -> float:
+        """Return the rate of return on a asset
+
+        start_date (str or Timestamp): when the asset was placed
+        end_date (str or Timestamp): when the asset was sold
+
+        """
         start = self.start_value if start_date is None else self.history.loc[start_date, ACLO]
         end = self.end_value if end_date is None else self.history.loc[end_date, ACLO]
         return start/end
 
+
+def annualize(ror: Union[Iterable[float], float], n: int, periodicity=DAYS) -> Union[Iterable[float], float]:
+    """
+    Takes in a rate or return or a list of rates of return and returns them annualized
+
+    n (int): the number of observed periods
+    periodicity (str): whether the observed periods are in DAYS or YEARS
+    """
+    assert periodicity in [YEARS, DAYS], "periodicity must be '{}' or '{}'".format(YEARS, DAYS)
+    if isinstance(ror, float) and periodicity == DAYS:
+        return (1 + ror)**(YEAR/n) - 1
+    elif isinstance(ror, float) and periodicity == YEARS:
+        return (1 + ror)**(1/n) - 1
+    else:
+        return Series(data=[annualize(x, n, periodicity) for x in ror], index=ror.index)
+
+
 # hypothesis 1
 
 
-def hyp1(history: DataFrame, start_date=None, step=20, duration=5, num_segments=10) -> DataFrame:
+def get_returns(history: DataFrame, start_date=None, step=20, duration=5, num_segments=10) -> DataFrame:
     """
     Split a dataframe with price history into num_segments segments of equal
     duration, each starting step days after the previous,
@@ -86,10 +110,10 @@ def hyp1(history: DataFrame, start_date=None, step=20, duration=5, num_segments=
     start_index = 0 if start_date is None else history.index.get_loc(start_date)
     col_index = history.columns.get_loc(ACLO)
     i = start_index
-    length = duration*YEAR
+    length = round(duration*YEAR)
     while i < len(history.index) and i+length < len(history.index) and \
-    (want_max or len(output) < num_segments):
-        ror =  history.iloc[i+length, col_index]/history.iloc[i, col_index]
-        output.append((history.index[i],ror - 1))
+            (want_max or len(output) < num_segments):
+        ror = history.iloc[i+length, col_index]/history.iloc[i, col_index]
+        output.append((history.index[i], ror - 1))
         i += step
     return DataFrame(output, columns=[DATE, ROR])

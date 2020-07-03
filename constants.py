@@ -7,8 +7,10 @@ ACLO = "Adj Close"
 # Note a year has approximately 252 trading days.
 YEAR = 252
 ROR = "Rate of Return"
-
+DAYS = "Trading Days"
+YEARS = "Trading Years" # 252 trading days
 DAILY = "Daily RoR"
+
 # To bring constans into the console, from the console write the following
 # exec(open("constants.py").read())
 
