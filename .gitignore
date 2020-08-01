@@ -6,3 +6,7 @@
 !*.py
 !raw_data/
 !raw_data/*.csv
+!scratchwork/
+!scratchwork/*.py
+!pictures/
+!pictures/*.py
