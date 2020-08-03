@@ -2,6 +2,7 @@
 *
 # Except
 !README.md
+!README.Rmd
 !.gitignore
 !*.py
 !raw_data/
