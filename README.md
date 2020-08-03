@@ -82,3 +82,5 @@ after five years, if you just happened to throw in a lump some
 investment in the TSX on some trading day from June 29, 1979 to April
 20, 2015? Let’s look at the distribution of 5-year annualized rates of
 return in that time period.
+
+To be continued…

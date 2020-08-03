@@ -16,11 +16,6 @@ XIC_data = pd.read_csv(RAW + XIC)
 # find null rows
 # TSX_data[[DATE, ACLO]][pd.isnull(TSX_data[ACLO]) == True]
 
-for i in TSX_data.index:
-    if np.isnan(TSX_data.loc[i,ACLO]):
-        TSX_data.loc[i,ACLO] = (TSX_data.loc[i+1,ACLO] + TSX_data.loc[i-1,ACLO])/2
-TSX_data.loc[5792,ACLO] = TSX_data.loc[5791,ACLO] + (TSX_data.loc[5794,ACLO] - TSX_data.loc[5791,ACLO])/3
-TSX_data.loc[5793,ACLO] = TSX_data.loc[5791,ACLO] + 2 * (TSX_data.loc[5794,ACLO] - TSX_data.loc[5791,ACLO])/3
 
 data = TSX_data.merge(XIC_data, on=DATE)
 

@@ -117,3 +117,23 @@ def get_returns(history: DataFrame, start_date=None, step=20, duration=5, num_se
         output.append((history.index[i], ror - 1))
         i += step
     return DataFrame(output, columns=[DATE, ROR])
+
+
+def fill_nans(history: DataFrame, col=ACLO) -> None:
+    """
+    Fill in place the NaNs in col of history with the average of the nearest non-NaN value.
+    """
+    c = history.columns.get_loc(ACLO)
+    n = len(history.index)
+    for i in np.arange(1, n):
+        if np.isnan(history.iloc[i, c]):
+            ante_i = i - 1
+            post_i = i + 1
+            while np.isnan(history.iloc[ante_i, c]):
+                ante_i -= 1
+            while np.isnan(history.iloc[post_i, c]):
+                post_i += 1
+            dif = post_i + ante_i
+            before = history.iloc[ante_i, c]
+            after = history.iloc[post_i, c]
+            history.iloc[i, c] = before + (i - ante_i)*(after - before)/dif

@@ -60,11 +60,7 @@ The data for this project comes from [Yahoo Finance](ca.finance.yahoo.com).
 
 ```{python include=FALSE}
 TSX_data = pd.read_csv(RAW + TSX)
-for i in TSX_data.index:
-    if np.isnan(TSX_data.loc[i,ACLO]):
-        TSX_data.loc[i,ACLO] = (TSX_data.loc[i+1,ACLO] + TSX_data.loc[i-1,ACLO])/2
-TSX_data.loc[5792,ACLO] = TSX_data.loc[5791,ACLO] + (TSX_data.loc[5794,ACLO] - TSX_data.loc[5791,ACLO])/3
-TSX_data.loc[5793,ACLO] = TSX_data.loc[5791,ACLO] + 2 * (TSX_data.loc[5794,ACLO] - TSX_data.loc[5791,ACLO])/3
+fill_nans(TSX_data)
 a = Asset(name=TSX, history=TSX_data)
 claim1_data = get_returns(a.history, step=1, num_segments="Max", duration=5)
 annualized_mean_ror = round(annualize(claim1_data[ROR].mean(),n=5,periodicity=YEARS) * 100,2)
