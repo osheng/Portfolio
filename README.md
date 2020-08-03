@@ -1,4 +1,8 @@
 
+# Portfolio
+
+### Introduction
+
 “The average return on stocks is 6% per year.”
 
 “Most of the gains in the market in any year come from the ten best
@@ -47,14 +51,34 @@ So here are my goals for this project.
   - Create a tool to make apples-to-apples comparisons in the
     performance of portfolios.
 
-Note: this project is very much a work in progress. In what follows, I
-ignore investment fees, taxes, dividends and all other cash payouts from
+### Fine print
+
+This project is very much a work in progress. In what follows, I ignore
+investment fees, taxes, dividends and all other cash payouts from
 holding assets.
+
+Rates of return are based on the *Adj Close* values.
+
+There’s also a few holes in my data set which I’ve filled in by taking
+the average Adj Close values of the closest non-null values.
+
+There are probably other errors in my work.
+
+### Data Source
+
+The data for this project comes from [Yahoo
+Finance](ca.finance.yahoo.com).
 
 ### Claim \#1
 
 “The average return on stocks is 6% per year.”
 
 According to my calculations, the annualized average return on a five
-year investment in the TSX, made on an trading day from 1979 to 2015 is
-6.42%.
+year investment in the TSX made on any trading day from June 29, 1979 to
+April 20, 2015 is 6.34%. Hey\! That’s pretty close\!
+
+But how likely would you have gotten an annual rate of return of 6.34%
+after five years, if you just happened to throw in a lump some
+investment in the TSX on some trading day from June 29, 1979 to April
+20, 2015? Let’s look at the distribution of 5-year annualized rates of
+return in that time period.

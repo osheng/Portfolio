@@ -13,6 +13,14 @@ WELCOME = "The console is now set up and ready for you to explore data!"
 TSX_data = pd.read_csv(RAW + TSX)
 XIC_data = pd.read_csv(RAW + XIC)
 
+# find null rows
+# TSX_data[[DATE, ACLO]][pd.isnull(TSX_data[ACLO]) == True]
+
+for i in TSX_data.index:
+    if np.isnan(TSX_data.loc[i,ACLO]):
+        TSX_data.loc[i,ACLO] = (TSX_data.loc[i+1,ACLO] + TSX_data.loc[i-1,ACLO])/2
+TSX_data.loc[5792,ACLO] = TSX_data.loc[5791,ACLO] + (TSX_data.loc[5794,ACLO] - TSX_data.loc[5791,ACLO])/3
+TSX_data.loc[5793,ACLO] = TSX_data.loc[5791,ACLO] + 2 * (TSX_data.loc[5794,ACLO] - TSX_data.loc[5791,ACLO])/3
 
 data = TSX_data.merge(XIC_data, on=DATE)
 
@@ -28,7 +36,7 @@ def run(file_name: str) -> None:
 exec(open("asset.py").read())
 exec(open("plot.py").read())
 
-a = Asset(name=TSX, history_fn=RAW+TSX)
+a = Asset(name=TSX, history=TSX_data)
 hyp_data2 = get_returns(a.history, step=1, num_segments="Max", duration=0.5)
 sns.set_style("darkgrid")
 g = sns.lineplot(data=hyp_data2, x=DATE, y=ROR, palette=["blue"])

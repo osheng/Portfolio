@@ -16,8 +16,9 @@ import numpy as np
 from asset import *
 from numpy.linalg import inv
 ```
+# Portfolio
 
-
+### Introduction
 “The average return on stocks is 6% per year.”
 
 “Most of the gains in the market in any year come from the ten best days.”
@@ -38,18 +39,42 @@ So here are my goals for this project.
 ###### Stretch Goal
 * Create a tool to make apples-to-apples comparisons in the performance of portfolios.
 
-Note: this project is very much a work in progress. In what follows, I ignore
- investment fees, taxes, dividends and all other cash payouts from holding assets.
+
+### Fine print
+This project is very much a work in progress. In what follows, I ignore
+investment fees, taxes, dividends and all other cash payouts from holding assets.
+
+ Rates of return are based on the *Adj Close* values.
+
+ There’s also a few holes in my data set which I’ve filled in by taking the average
+ Adj Close values of the closest non-null values.
+
+There are probably other errors in my work.
+
+### Data Source
+The data for this project comes from [Yahoo Finance](ca.finance.yahoo.com).
 
 
 ### Claim #1
 “The average return on stocks is 6% per year.”
 
 ```{python include=FALSE}
-a = Asset(name=TSX, history_fn=RAW+TSX)
+TSX_data = pd.read_csv(RAW + TSX)
+for i in TSX_data.index:
+    if np.isnan(TSX_data.loc[i,ACLO]):
+        TSX_data.loc[i,ACLO] = (TSX_data.loc[i+1,ACLO] + TSX_data.loc[i-1,ACLO])/2
+TSX_data.loc[5792,ACLO] = TSX_data.loc[5791,ACLO] + (TSX_data.loc[5794,ACLO] - TSX_data.loc[5791,ACLO])/3
+TSX_data.loc[5793,ACLO] = TSX_data.loc[5791,ACLO] + 2 * (TSX_data.loc[5794,ACLO] - TSX_data.loc[5791,ACLO])/3
+a = Asset(name=TSX, history=TSX_data)
 claim1_data = get_returns(a.history, step=1, num_segments="Max", duration=5)
 annualized_mean_ror = round(annualize(claim1_data[ROR].mean(),n=5,periodicity=YEARS) * 100,2)
 ```
 
-According to my calculations, the annualized average return on a five year investment in the TSX,
-made on an trading day from 1979 to 2015 is `r py$annualized_mean_ror`%.
+According to my calculations, the annualized average return on a five year investment in the TSX
+made on any trading day from June 29, 1979 to April 20, 2015 is `r py$annualized_mean_ror`%. Hey! That's pretty close!
+
+But how likely would you have gotten an annual rate of return of `r py$annualized_mean_ror`% after five years,
+if you just happened to throw in a lump some investment in the TSX on some trading day from June 29, 1979 to April 20, 2015?
+Let's look at the distribution of 5-year annualized rates of return in that time period.
+
+To be continued...
