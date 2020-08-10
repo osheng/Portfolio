@@ -61,7 +61,7 @@ def plot_density(s: Series, n=100, round_to=2, num_quantiles=4, normalize=False)
     while i < len(data.index):
         # xticklabels[i].set_rotation("vertical")
         if q_j < len(quantiles) and quantiles[q_j] in data.index[i]:
-            new_xlabels[i] = round(quantiles[q_j]*100, round_to)
+            new_xlabels[i] = round(quantiles[q_j], round_to)
             q_j += 1
         else:
             i += 1

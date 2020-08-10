@@ -15,6 +15,8 @@ from constants import *
 import numpy as np
 from asset import *
 from numpy.linalg import inv
+from plot import plot_density
+from matplotlib import pyplot as plt
 ```
 # Portfolio
 
@@ -63,14 +65,28 @@ TSX_data = pd.read_csv(RAW + TSX)
 fill_nans(TSX_data)
 a = Asset(name=TSX, history=TSX_data)
 claim1_data = get_returns(a.history, step=1, num_segments="Max", duration=5)
-annualized_mean_ror = round(annualize(claim1_data[ROR].mean(),n=5,periodicity=YEARS) * 100,2)
+claim1_data[ROR] = annualize(claim1_data[ROR],n=5,periodicity=YEARS)
+annualized_mean_ror = round(claim1_data[ROR].mean() * 100,2)
 ```
 
 According to my calculations, the annualized average return on a five year investment in the TSX
-made on any trading day from June 29, 1979 to April 20, 2015 is `r py$annualized_mean_ror`%. Hey! That's pretty close!
+made on any trading day from June 29, 1979 to April 24, 2015 is `r py$annualized_mean_ror`%. Hey! That's pretty close!
 
 But how likely would you have gotten an annual rate of return of `r py$annualized_mean_ror`% after five years,
-if you just happened to throw in a lump some investment in the TSX on some trading day from June 29, 1979 to April 20, 2015?
+if you just happened to throw in a lump some investment in the TSX on some trading day from June 29, 1979 to April 24, 2015?
 Let's look at the distribution of 5-year annualized rates of return in that time period.
+
+```{python echo=FALSE}
+sns.distplot(claim1_data[ROR],bins=100,kde=False)
+plt.show()
+```
+Note: in the histogram above, 0 indicates no grows after 5 years.
+
+```{python include=FALSE}
+q = round(quantile(claim1_data[ROR], annualized_mean_ror/100) * 100, 2)
+```
+
+As can be gleaned from the histogram above, the average return is actually higher than what most people
+would get, assuming they invested on a random day. In fact, it's more than `r py$q`% of investors would get.
 
 To be continued...

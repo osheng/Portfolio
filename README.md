@@ -75,12 +75,19 @@ Finance](ca.finance.yahoo.com).
 
 According to my calculations, the annualized average return on a five
 year investment in the TSX made on any trading day from June 29, 1979 to
-April 20, 2015 is 6.34%. Hey\! That’s pretty close\!
+April 24, 2015 is 5.8%. Hey\! That’s pretty close\!
 
-But how likely would you have gotten an annual rate of return of 6.34%
+But how likely would you have gotten an annual rate of return of 5.8%
 after five years, if you just happened to throw in a lump some
 investment in the TSX on some trading day from June 29, 1979 to April
-20, 2015? Let’s look at the distribution of 5-year annualized rates of
+24, 2015? Let’s look at the distribution of 5-year annualized rates of
 return in that time period.
+
+![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- --> Note: in the
+histogram above, 0 indicates no grows after 5 years.
+
+As can be gleaned from the histogram above, the average return is
+actually higher than what most people would get, assuming they invested
+on a random day. In fact, it’s more than 59.46% of investors would get.
 
 To be continued…
