@@ -83,9 +83,9 @@ investment in the TSX on some trading day from June 29, 1979 to April
 24, 2015? Let’s look at the distribution of 5-year annualized rates of
 return in that time period.
 
-![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
-
-Note: in the histogram above, 0 indicates no grows after 5 years.
+![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- --> <br> Note: in
+the histogram above, 0 indicates no growth after 5 years. The 25th, 50th
+(median), and 75th quantiles are highlighted in red.
 
 As can be gleaned from the histogram above, the average return is
 actually higher than what most people would get, assuming they invested

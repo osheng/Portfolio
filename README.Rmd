@@ -79,9 +79,8 @@ Let's look at the distribution of 5-year annualized rates of return in that time
 ```{python echo=FALSE}
 plot_density(claim1_data[ROR])
 ```
-
-
-Note: in the histogram above, 0 indicates no grows after 5 years.
+<br>
+Note: in the histogram above, 0 indicates no growth after 5 years.
 The 25th, 50th (median), and 75th quantiles are highlighted in red.
 
 ```{python include=FALSE}
