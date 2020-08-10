@@ -54,8 +54,8 @@ So here are my goals for this project.
 ### Fine print
 
 This project is very much a work in progress. In what follows, I ignore
-investment fees, taxes, dividends and all other cash payouts from
-holding assets.
+inflation, investment fees, taxes, dividends and all other cash payouts
+from holding assets.
 
 Rates of return are based on the *Adj Close* values.
 
@@ -83,8 +83,9 @@ investment in the TSX on some trading day from June 29, 1979 to April
 24, 2015? Let’s look at the distribution of 5-year annualized rates of
 return in that time period.
 
-![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- --> Note: in the
-histogram above, 0 indicates no grows after 5 years.
+![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+Note: in the histogram above, 0 indicates no grows after 5 years.
 
 As can be gleaned from the histogram above, the average return is
 actually higher than what most people would get, assuming they invested

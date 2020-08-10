@@ -43,7 +43,7 @@ So here are my goals for this project.
 
 
 ### Fine print
-This project is very much a work in progress. In what follows, I ignore
+This project is very much a work in progress. In what follows, I ignore inflation,
 investment fees, taxes, dividends and all other cash payouts from holding assets.
 
  Rates of return are based on the *Adj Close* values.
@@ -77,10 +77,12 @@ if you just happened to throw in a lump some investment in the TSX on some tradi
 Let's look at the distribution of 5-year annualized rates of return in that time period.
 
 ```{python echo=FALSE}
-sns.distplot(claim1_data[ROR],bins=100,kde=False)
-plt.show()
+plot_density(claim1_data[ROR])
 ```
+
+
 Note: in the histogram above, 0 indicates no grows after 5 years.
+The 25th, 50th (median), and 75th quantiles are highlighted in red.
 
 ```{python include=FALSE}
 q = round(quantile(claim1_data[ROR], annualized_mean_ror/100) * 100, 2)

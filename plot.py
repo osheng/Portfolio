@@ -50,8 +50,7 @@ def plot_density(s: Series, n=100, round_to=2, num_quantiles=4, normalize=False)
     """
     data = s.value_counts(bins=n, sort=False, normalize=normalize).sort_index()
     mean_index = (((data.index.right - data.index.left) / 2) + data.index.left)
-    quantiles = [s.min()] + [s.quantile(p/num_quantiles)
-                             for p in np.arange(1, num_quantiles)] + [s.max()]
+    quantiles = [s.quantile(p/num_quantiles) for p in np.arange(1, num_quantiles)]
     colors = ["red" if any([q in x for q in quantiles]) else "blue" for x in data.index]
     barplot = sns.barplot(x=mean_index, y=data, palette=colors, ci=None)
     new_xlabels = ["" for x in data.index]
@@ -61,7 +60,7 @@ def plot_density(s: Series, n=100, round_to=2, num_quantiles=4, normalize=False)
     while i < len(data.index):
         # xticklabels[i].set_rotation("vertical")
         if q_j < len(quantiles) and quantiles[q_j] in data.index[i]:
-            new_xlabels[i] = round(quantiles[q_j], round_to)
+            new_xlabels[i] = round(quantiles[q_j]*100, round_to)
             q_j += 1
         else:
             i += 1
