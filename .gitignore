@@ -1,3 +1,4 @@
+
 # Ignore everything
 *
 # Except
@@ -9,5 +10,6 @@
 !raw_data/*.csv
 !scratchwork/
 !scratchwork/*.py
-!pictures/
-!pictures/*.py
+!README_files/
+!README_files/figure_gfm/
+!README_files/figure_gfm/*.png

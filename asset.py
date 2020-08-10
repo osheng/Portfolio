@@ -138,6 +138,7 @@ def fill_nans(history: DataFrame, col=ACLO) -> None:
             after = history.iloc[post_i, c]
             history.iloc[i, c] = before + (i - ante_i)*(after - before)/dif
 
+
 def quantile(s: Series, value: float) -> float:
     """
     Return which quantile of s value is in.
