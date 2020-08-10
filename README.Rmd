@@ -80,8 +80,8 @@ Let's look at the distribution of 5-year annualized rates of return in that time
 plot_density(claim1_data[ROR])
 ```
 <br>
-Note: in the histogram above, 0 indicates no growth after 5 years.
-The 25th, 50th (median), and 75th quantiles are highlighted in red.
+Note: in the histogram above, the 25th, 50th (median), and 75th quantiles are highlighted in red.
+ The values underneath represent the annualized rates of return as percentages. 
 
 ```{python include=FALSE}
 q = round(quantile(claim1_data[ROR], annualized_mean_ror/100) * 100, 2)

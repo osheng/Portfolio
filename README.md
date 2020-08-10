@@ -84,8 +84,9 @@ investment in the TSX on some trading day from June 29, 1979 to April
 return in that time period.
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- --> <br> Note: in
-the histogram above, 0 indicates no growth after 5 years. The 25th, 50th
-(median), and 75th quantiles are highlighted in red.
+the histogram above, the 25th, 50th (median), and 75th quantiles are
+highlighted in red. The values underneath represent the annualized rates
+of return as percentages.
 
 As can be gleaned from the histogram above, the average return is
 actually higher than what most people would get, assuming they invested
