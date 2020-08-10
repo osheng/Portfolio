@@ -81,13 +81,18 @@ plot_density(claim1_data[ROR])
 ```
 <br>
 Note: in the histogram above, the 25th, 50th (median), and 75th quantiles are highlighted in red.
- The values underneath represent the annualized rates of return as percentages. 
+ The values underneath represent the annualized rates of return as percentages.
 
 ```{python include=FALSE}
-q = round(quantile(claim1_data[ROR], annualized_mean_ror/100) * 100, 2)
+q_mean = round(quantile(claim1_data[ROR], annualized_mean_ror/100) * 100, 2)
+min_ror = round(claim1_data[ROR].min() * 100, 2)
+max_ror = round(claim1_data[ROR].max() * 100, 2)
+q0 = round(quantile(claim1_data[ROR], 0) * 100, 2)
 ```
 
 As can be gleaned from the histogram above, the average return is actually higher than what most people
-would get, assuming they invested on a random day. In fact, it's more than `r py$q`% of investors would get.
+would get, assuming they invested on a random day. In fact, it's more than `r py$q_mean`% of investors would get. It's also interesting to note that the min of the above distribution is `r py$min_ror`% and `r py$q0`% of investors got negative returns. But the max of the distribution is a whopping `r py$max_ror`%!
+
+It would appear that timing is quite important.
 
 To be continued...

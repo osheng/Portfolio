@@ -91,5 +91,10 @@ of return as percentages.
 As can be gleaned from the histogram above, the average return is
 actually higher than what most people would get, assuming they invested
 on a random day. In fact, it’s more than 59.46% of investors would get.
+It’s also interesting to note that the min of the above distribution is
+-5.45% and 12.67% of investors got negative returns. But the max of the
+distribution is a whopping 23.02%\!
+
+It would appear that timing is quite important.
 
 To be continued…
