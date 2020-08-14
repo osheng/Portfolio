@@ -109,4 +109,9 @@ when placed for 1 to 20 years.
 ![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- --> <br> Here we
 include the max in min values for each time horizon.
 
+The first few years seem to be obscuring things here. So let’s drop
+those.
+
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
 To be continued…

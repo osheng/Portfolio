@@ -110,15 +110,23 @@ for i in claim1a_data.index:
   claim1a_data.loc[i,"mean"] = row_data[ROR].mean()
   claim1a_data.loc[i,"median"] = row_data[ROR].median()
 # print(claim1a_data)
-claim1a_data[["median","mean"]].plot.line(style='.-')
+colors = ["blue", "orange", "purple", "green", "red"]
+claim1a_data["zero"] = [0 for x in np.arange(1,n)]
+claim1a_data[["median","mean"]].plot.line(style='.-', color=colors[:2])
 ```
 <br>
 Here we consider the median and mean return on investments between 1979 and 2020 when placed for 1 to 20 years.
 
 ```{python echo=FALSE}
-claim1a_data.plot.line(style='.-')
+claim1a_data[cols].plot.line(style='.-', color=colors[:4])
 ```
 <br>
 Here we include the max in min values for each time horizon.
+
+The first few years seem to be obscuring things here. So let's drop those.
+
+```{python echo=FALSE}
+claim1a_data[8:].plot.line(style='.-', color=colors)
+```
 
 To be continued...
