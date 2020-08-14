@@ -75,9 +75,9 @@ Finance](ca.finance.yahoo.com).
 
 According to my calculations, the annualized average return on a five
 year investment in the TSX made on any trading day from June 29, 1979 to
-April 24, 2015 is 5.8%. Hey\! That’s pretty close\!
+April 24, 2015 is 5.8%.
 
-But how likely would you have gotten an annual rate of return of 5.8%
+Now how likely would you have gotten an annual rate of return of 5.8%
 after five years, if you just happened to throw in a lump some
 investment in the TSX on some trading day from June 29, 1979 to April
 24, 2015? Let’s look at the distribution of 5-year annualized rates of
@@ -90,11 +90,23 @@ of return as percentages.
 
 As can be gleaned from the histogram above, the average return is
 actually higher than what most people would get, assuming they invested
-on a random day. In fact, it’s more than 59.46% of investors would get.
-It’s also interesting to note that the min of the above distribution is
--5.45% and 12.67% of investors got negative returns. But the max of the
-distribution is a whopping 23.02%\!
+on a random day. In fact, it’s more than what 59.46% of investors would
+get. It’s also interesting to note that the min of the above
+distribution is -5.45% and 12.67% of investors got negative returns. But
+the max of the distribution is a whopping 23.02%\!
 
 It would appear that timing is quite important.
+
+### Claim \#1.a
+
+My investigation into Claim 1 leads me to a second question. How would
+changing the duration of the investment affect the analysis?
+
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- --> <br> Here we
+consider the median and mean return on investments between 1979 and 2020
+when placed for 1 to 20 years.
+
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- --> <br> Here we
+include the max in min values for each time horizon.
 
 To be continued…
