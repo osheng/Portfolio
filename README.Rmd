@@ -100,25 +100,28 @@ My investigation into Claim 1 leads me to a second question. How would changing 
 
 ```{python echo=FALSE}
 n = 20 + 1
-cols = ["median", "mean", "min", "max"]
+cols = ["median", "mean", "min", "max", "mean-", "mean+"]
 claim1a_data=DataFrame(index=[x for x in np.arange(1,n)], columns=cols)
 for i in claim1a_data.index:
   row_data = get_returns(a.history, step=1, num_segments="Max", duration=i)
   row_data[ROR] = annualize(row_data[ROR], n=i, periodicity=YEARS)
+  sigma =  row_data[ROR].std()
   claim1a_data.loc[i,"min"] = row_data[ROR].min()
   claim1a_data.loc[i,"max"] = row_data[ROR].max()
   claim1a_data.loc[i,"mean"] = row_data[ROR].mean()
   claim1a_data.loc[i,"median"] = row_data[ROR].median()
+  claim1a_data.loc[i,"mean-"] = row_data[ROR].mean() - sigma
+  claim1a_data.loc[i,"mean+"] = row_data[ROR].mean() + sigma
 # print(claim1a_data)
-colors = ["blue", "orange", "purple", "green", "red"]
+colors = ["blue", "orange", "purple", "green", "chocolate", "brown", "red"]
 claim1a_data["zero"] = [0 for x in np.arange(1,n)]
 claim1a_data[["median","mean"]].plot.line(style='.-', color=colors[:2])
 ```
 <br>
-Here we consider the median and mean return on investments between 1979 and 2020 when placed for 1 to 20 years.
+Here we consider the median and mean return on investments between 1979 and 2020 when placed for 1 to 20 years. "mean-" means "mean minus one standard deviation", and similarly for "mean+".
 
 ```{python echo=FALSE}
-claim1a_data[cols].plot.line(style='.-', color=colors[:4])
+claim1a_data[cols].plot.line(style='.-', color=colors[:6])
 ```
 <br>
 Here we include the max in min values for each time horizon.
