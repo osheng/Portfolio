@@ -95,7 +95,7 @@ would get, assuming they invested on a random day. In fact, it's more than what 
 
 It would appear that timing is quite important.
 
-### Claim #1.a
+### Claim #1a
 My investigation into Claim 1 leads me to a second question. How would changing the duration of the investment affect the analysis?
 
 ```{python echo=FALSE}
@@ -112,24 +112,51 @@ for i in claim1a_data.index:
   claim1a_data.loc[i,"median"] = row_data[ROR].median()
   claim1a_data.loc[i,"mean-"] = row_data[ROR].mean() - sigma
   claim1a_data.loc[i,"mean+"] = row_data[ROR].mean() + sigma
-# print(claim1a_data)
 colors = ["blue", "orange", "purple", "green", "chocolate", "brown", "red"]
 claim1a_data["zero"] = [0 for x in np.arange(1,n)]
 claim1a_data[["median","mean"]].plot.line(style='.-', color=colors[:2])
 ```
 <br>
-Here we consider the median and mean return on investments between 1979 and 2020 when placed for 1 to 20 years. "mean-" means "mean minus one standard deviation", and similarly for "mean+".
+Here we consider the median and mean return on investments between 1979 and 2020 when placed for 1 to 20 years.
 
 ```{python echo=FALSE}
 claim1a_data[cols].plot.line(style='.-', color=colors[:6])
 ```
 <br>
 Here we include the max in min values for each time horizon.
+"mean-" means "mean minus one standard deviation", and similarly for "mean+".
 
 The first few years seem to be obscuring things here. So let's drop those.
 
 ```{python echo=FALSE}
 claim1a_data[8:].plot.line(style='.-', color=colors)
 ```
+
+
+<!--
+Let's look at that last plot again but this data from the USA over the same time period.
+```{python echo=FALSE}
+snp500_data = pd.read_csv(RAW + SNP500)
+fill_nans(snp500_data)
+snp500_data[DATE] = pd.to_datetime(snp500_data[DATE])
+snp500_data = snp500_data[snp500_data[DATE]>=TSX_data[DATE].min()]
+usa = Asset(name=SNP500, history=snp500_data)
+claim1usa_data=DataFrame(index=[x for x in np.arange(1,n)], columns=cols)
+for i in claim1usa_data.index:
+  row_data = get_returns(usa.history, step=1, num_segments="Max", duration=i)
+  row_data[ROR] = annualize(row_data[ROR], n=i, periodicity=YEARS)
+  sigma =  row_data[ROR].std()
+  claim1usa_data.loc[i,"min"] = row_data[ROR].min()
+  claim1usa_data.loc[i,"max"] = row_data[ROR].max()
+  claim1usa_data.loc[i,"mean"] = row_data[ROR].mean()
+  claim1usa_data.loc[i,"median"] = row_data[ROR].median()
+  claim1usa_data.loc[i,"mean-"] = row_data[ROR].mean() - sigma
+  claim1usa_data.loc[i,"mean+"] = row_data[ROR].mean() + sigma
+colors = ["blue", "orange", "purple", "green", "chocolate", "brown", "red"]
+claim1usa_data["zero"] = [0 for x in np.arange(1,n)]
+claim1usa_data[8:].plot.line(style='.-', color=colors)
+```
+-->
+
 
 To be continued...

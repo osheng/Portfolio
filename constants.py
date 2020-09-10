@@ -3,6 +3,7 @@ AROR = "Annualized Rate of Return"
 RAW = "raw_data/"
 XIC = "XIC.csv"
 TSX = "SPTSXComp.csv"
+SNP500 = "SNP500.csv"
 ACLO = "Adj Close"
 # Note a year has approximately 252 trading days.
 YEAR = 252

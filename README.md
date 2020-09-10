@@ -97,7 +97,7 @@ the max of the distribution is a whopping 23.02%\!
 
 It would appear that timing is quite important.
 
-### Claim \#1.a
+### Claim \#1a
 
 My investigation into Claim 1 leads me to a second question. How would
 changing the duration of the investment affect the analysis?
@@ -107,11 +107,18 @@ consider the median and mean return on investments between 1979 and 2020
 when placed for 1 to 20 years.
 
 ![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- --> <br> Here we
-include the max in min values for each time horizon.
+include the max in min values for each time horizon. “mean-” means “mean
+minus one standard deviation”, and similarly for “mean+”.
 
 The first few years seem to be obscuring things here. So let’s drop
 those.
 
 ![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+<!--
+Let's look at that last plot again but this data from the USA over the same time period.
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+
 
 To be continued…
